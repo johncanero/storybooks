@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
@@ -15,15 +16,17 @@ connectDB();
 // 1. Create const app = express()
 const app = express();
 
-// morgan console
+// Include morgan to check console and error
 if (process.env.NODE_ENV == 'development') {
     app.use(morgan('dev'));
 };
 
-// Handlebars
+// Create Handlebars to set hbs files
 app.engine('.hbs', exphbs.engine({defaultLayout: 'main', extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
+// Create a static folder for public and css
+app.use(express.static(path.join(__dirname, 'public')))
 
 // Routes
 app.use('/', require('./routes/index'));
