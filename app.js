@@ -1,8 +1,12 @@
 const express = require('express');
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
+const connectDB = require('./config/db')
 
 // Load config
-dotenv.config({ path: './config/config.ev' })
+dotenv.config({ path: './config/config.env' })
+
+connectDB();
+
 
 // 1. Create const app = express()
 const app = express();
