@@ -18,15 +18,15 @@ require('./config/passport')(passport);
 connectDB();
 
 
-// 1. Create const app = express()
+// express()
 const app = express();
 
-// Include morgan to check console and error
+// morgan
 if (process.env.NODE_ENV == 'development') {
     app.use(morgan('dev'));
 };
 
-// Create Handlebars to set hbs files
+// Handlebars (hbs files)
 app.engine('.hbs', exphbs.engine({defaultLayout: 'main', extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
@@ -42,6 +42,7 @@ app.use(session({
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 // Create a static folder for public and css
 app.use(express.static(path.join(__dirname, 'public')))
