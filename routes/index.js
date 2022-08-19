@@ -15,7 +15,7 @@ router.get('/', ensureGuest, (req, res) => {
 
 // @description: Dashboard
 // @route: GET /dashboard
-router.get('/dashboard', ensureAuth, (req, res) => {  
+router.get('/dashboard', ensureAuth, async (req, res) => {  
 
     try {
       const stories = await Story.find({ user: req.user.id }).lean()    
@@ -25,6 +25,7 @@ router.get('/dashboard', ensureAuth, (req, res) => {
     }) 
     } catch (err) {
         console.error(err);
+        res.render('error/500')
     }
 });
 
