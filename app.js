@@ -25,6 +25,10 @@ connectDB();
 // express()
 const app = express();
 
+// Body parser (Tutorial: stories.js)
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 // morgan
 if (process.env.NODE_ENV == 'development') {
     app.use(morgan('dev'));
