@@ -24,6 +24,7 @@ router.post('/', ensureAuth, async (req, res) => {
     }
 });
 
+
 // @description: Show all stories
 // @route: GET /stories
 router.get('/', ensureAuth, async (req, res) => {
@@ -41,6 +42,33 @@ router.get('/', ensureAuth, async (req, res) => {
         res.render('error/500');
     }
 });
+
+
+
+
+// @description: Show single story page
+// @route: GET /stories/:id
+router.get('/:id', ensureAuth, async (req, res) => {
+    try {
+        let story = await Story.findById(req.params.id) 
+        .populate('user')
+        .lean()
+
+        if (!story) {
+            return res.render('error/404')
+        }
+
+        res.render('stories/show', {
+            story
+        })
+    } catch (err) {
+        console.error(err)
+        res.render('error/404')
+    }
+});
+
+
+
 
 // @description: Show edit page
 // @route: GET /storoes/edit/:id
