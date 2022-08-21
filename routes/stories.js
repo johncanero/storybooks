@@ -5,7 +5,7 @@ const Story = require('../models/Story');
 
 
 // @description: Show add page
-// @route: GET /stproes/add
+// @route: GET /stories/add
 router.get('/add', ensureAuth, (req, res) => {
     res.render('stories/add')
 });
@@ -42,6 +42,27 @@ router.get('/', ensureAuth, async (req, res) => {
     }
 });
 
+// @description: Show edit page
+// @route: GET /storoes/edit/:id
+router.get('/edit/:id', ensureAuth, async (req, res) => {
+    const story = await Story.findOne({
+        _id: req.params.id
+    }).lean();
+
+    // not !
+    if (! story) {
+        return res.render('error/404');
+    }
+
+    // not equal
+    if (story.user != req.user.id) {
+        res.redirect('/stories');
+    } else {
+        res.render('stories/edit', {
+            story,
+        })
+    }
+});
 
 
 
